@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/extdata6/Doyeon/anaconda3/envs/minu-py2/bin/python2
 ###############################################################################
 '''This parser takes as input the text files canonical_dataset.txt and 
 canonical_sequence.txt, and produces a .h5 file datafile_{}_{}.h5,

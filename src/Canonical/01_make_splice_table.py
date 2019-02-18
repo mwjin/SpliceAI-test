@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 """
 Make the splice table for this SpliceAI by parsing gff3 gene annotation file
 """
