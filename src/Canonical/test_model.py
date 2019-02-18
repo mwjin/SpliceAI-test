@@ -3,11 +3,10 @@
 # This file contains code to test the SpliceAI model.
 ###############################################################################
 
-import numpy as np
-import os
 import sys
 import time
 import h5py
+import pickle
 from keras.models import load_model
 from utils import *
 from constants import *
@@ -30,8 +29,7 @@ for v in range(len(version)):
 dataset_path = sys.argv[2]
 h5f = h5py.File(dataset_path, 'r')
 
-dataset_basename = os.path.basename(dataset_path)
-pr_curve_prefix = dataset_basename.replace('.h5', '')
+result_path = sys.argv[3]
 
 num_idx = len(h5f.keys())//2
 
@@ -45,58 +43,51 @@ output_class_labels = ['Null', 'Acceptor', 'Donor']
 # The three neurons per output correspond to no splicing, splice acceptor (AG)
 # and splice donor (GT) respectively.
 
-for output_class in [1, 2]:
+Y_true_acceptor = [[] for t in range(1)]
+Y_pred_acceptor = [[] for t in range(1)]
+Y_true_donor = [[] for t in range(1)]
+Y_pred_donor = [[] for t in range(1)]
 
-    Y_true = [[] for t in range(1)]
-    Y_pred = [[] for t in range(1)]
+for idx in range(num_idx):
 
-    for idx in range(num_idx):
+    X = h5f['X' + str(idx)][:]
+    Y = h5f['Y' + str(idx)][:]
 
-        X = h5f['X' + str(idx)][:]
-        Y = h5f['Y' + str(idx)][:]
+    Xc, Yc = clip_datapoints(X, Y, CL, 1)
 
-        Xc, Yc = clip_datapoints(X, Y, CL, 1)
+    Yps = [np.zeros(Yc[0].shape) for t in range(1)]
 
-        Yps = [np.zeros(Yc[0].shape) for t in range(1)]
+    for v in range(len(version)):
 
-        for v in range(len(version)):
+        Yp = model[v].predict(Xc, batch_size=BATCH_SIZE)
 
-            Yp = model[v].predict(Xc, batch_size=BATCH_SIZE)
-
-            if not isinstance(Yp, list):
-                Yp = [Yp]
-
-            for t in range(1):
-                Yps[t] += Yp[t]/len(version)
-        # Ensemble averaging (mean of the ensemble predictions is used)
+        if not isinstance(Yp, list):
+            Yp = [Yp]
 
         for t in range(1):
-
-            is_expr = (Yc[t].sum(axis=(1,2)) >= 1)
-
-            Y_true[t].extend(Yc[t][is_expr, :, output_class].flatten())
-            Y_pred[t].extend(Yps[t][is_expr, :, output_class].flatten())
-
-    pr_curve_title = pr_curve_prefix + '_%s' % output_class_labels[output_class]
-    pr_curve_path = '%s/%s_%s.png' % (RESULT_DIR, pr_curve_prefix, output_class_labels[output_class])
-
-    print "\n\033[1m%s:\033[0m" % (output_class_labels[output_class])
+            Yps[t] += Yp[t]/len(version)
+    # Ensemble averaging (mean of the ensemble predictions is used)
 
     for t in range(1):
 
-        Y_true[t] = np.asarray(Y_true[t])
-        Y_pred[t] = np.asarray(Y_pred[t])
+        is_expr = (Yc[t].sum(axis=(1,2)) >= 1)
 
-        print_topl_statistics(Y_true[t], Y_pred[t])
-
-        auc = draw_pr_curve(Y_true[t], Y_pred[t], title=pr_curve_title, plot_path=pr_curve_path)
-        print('AUC\t%.4f' % auc)
-
+        # acceptor
+        Y_true_acceptor[t].extend(Yc[t][is_expr, :, 1].flatten())
+        Y_pred_acceptor[t].extend(Yps[t][is_expr, :, 1].flatten())
+        Y_true_donor[t].extend(Yc[t][is_expr, :, 2].flatten())
+        Y_pred_donor[t].extend(Yps[t][is_expr, :, 2].flatten())
 
 h5f.close()
 
+test_result = [[Y_true_acceptor, Y_pred_acceptor], [Y_true_donor, Y_pred_donor]]
+
+with open(result_path, 'wb') as outfile:
+    pickle.dump(test_result, outfile)
+
 print "--- %s seconds ---" % (time.time() - start_time)
 print "--------------------------------------------------------------"
+
 
 ###############################################################################
 
