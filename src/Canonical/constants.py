@@ -7,10 +7,12 @@ SL=5000
 # Sequence length of SpliceAIs (SL+CL will be the input length and
 # SL will be the output length)
 
-splice_table='canonical_dataset.txt'
-ref_genome='/genomes/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa'
-# Input details
+# directory settings
+project_dir='/extdata4/baeklab/minwoo/project/SpliceAI-test'
+data_dir='/extdata4/baeklab/minwoo/project/SpliceAI-test/data'
+result_dir='/extdata4/baeklab/minwoo/project/SpliceAI-test/results'
 
-data_dir='./'
-sequence='canonical_sequence.txt'
-# Output details
+# data path settings
+ref_genome='/extdata6/Minwoo/data/ref-genome/hg19/hg19.fa'
+splice_table='/extdata4/baeklab/minwoo/projects/SpliceAI-test/data/canonical_dataset.txt'
+sequence='/extdata4/baeklab/minwoo/projects/SpliceAI-test/data/canonical_sequence.txt'
