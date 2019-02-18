@@ -71,7 +71,7 @@ class Gene:
         self.tx_end = int(fields[5])
 
         junc_starts = fields[6].strip(',').split(',')
-        junc_ends = fields[6].strip(',').split(',')
+        junc_ends = fields[7].strip(',').split(',')
 
         self.junc_starts.update(map(int, junc_starts))
         self.junc_ends.update(map(int, junc_ends))
