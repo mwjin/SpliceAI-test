@@ -1,3 +1,16 @@
+# SpliceAI-test
+This repository includes python/shell scripts to test [Illumina/SpliceAI](https://github.com/Illumina/SpliceAI) to check whether SpliceAI is really good at predicting splice sites.
+
+This project simply tries to run SpliceAI using all alternative isoforms from GENCODE v19.
+
+Original source codes: https://basespace.illumina.com/s/5u6ThOblecrh
+
+Additional source codes or source code modification will appear at the commit history. 
+
+The following description is original README.md of [Illumina/SpliceAI](https://github.com/Illumina/SpliceAI).
+
+***
+
 ## SpliceAI: A deep learning-based tool to identify splice variants
 This package annotates genetic variants with their predicted effect on splicing, as described in [Jaganathan *et al*, Cell 2019 in press](https://doi.org/10.1016/j.cell.2018.12.015).
 
