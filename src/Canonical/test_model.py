@@ -77,6 +77,9 @@ for output_class in [1, 2]:
             Y_true[t].extend(Yc[t][is_expr, :, output_class].flatten())
             Y_pred[t].extend(Yps[t][is_expr, :, output_class].flatten())
 
+    pr_curve_title = pr_curve_prefix + '_%s' % output_class_labels[output_class]
+    pr_curve_path = '%s/%s_%s.png' % (RESULT_DIR, pr_curve_prefix, output_class_labels[output_class])
+
     print "\n\033[1m%s:\033[0m" % (output_class_labels[output_class])
 
     for t in range(1):
@@ -85,6 +88,9 @@ for output_class in [1, 2]:
         Y_pred[t] = np.asarray(Y_pred[t])
 
         print_topl_statistics(Y_true[t], Y_pred[t])
+
+        auc = draw_pr_curve(Y_true[t], Y_pred[t], title=pr_curve_title, plot_path=pr_curve_path)
+        print('AUC\t%.4f' % auc)
 
 
 h5f.close()
