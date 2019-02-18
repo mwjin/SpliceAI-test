@@ -26,6 +26,12 @@ OUT_MAP = np.asarray([[1, 0, 0],
 # One-hot encoding of the outputs: 0 is for no splice, 1 is for acceptor,
 # 2 is for donor and -1 is for padding.
 
+CHROM_LIST = ["chr%s" % x for x in range(1, 23)] + ['chrX', 'chrY']
+
+
+def chrom_list():
+    return list(CHROM_LIST)
+
 
 def ceil_div(x, y):
 
