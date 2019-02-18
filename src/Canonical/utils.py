@@ -5,10 +5,13 @@ datafile_{}_{}.h5 and convert them into a format usable by Keras.'''
 
 import numpy as np
 import re
+import matplotlib.pyplot as plt
 from math import ceil
-from sklearn.metrics import average_precision_score
+from sklearn.metrics import average_precision_score, precision_recall_curve, auc
+from sklearn.utils.fixes import signature
 from constants import *
 
+plt.switch_backend('agg')
 assert CL_max % 2 == 0
 
 IN_MAP = np.asarray([[0, 0, 0, 0],
@@ -180,3 +183,38 @@ def print_topl_statistics(y_true, y_pred):
           topkl_accuracy[0], topkl_accuracy[1], topkl_accuracy[2],
           topkl_accuracy[3], auprc, threshold[0], threshold[1],
           threshold[2], threshold[3], len(idx_true))
+
+
+def draw_pr_curve(y_true, y_pred, **kwargs):
+    precision, recall, _ = precision_recall_curve(y_true, y_pred)
+
+    step_kwargs = ({'step': 'post'}
+                   if 'step' in signature(plt.fill_between).parameters
+                   else {})
+
+    plt.step(recall, precision, color='b', alpha=0.2, where='post')
+    plt.fill_between(recall, precision, alpha=0.2, color='b', **step_kwargs)
+
+    plt.xlabel('Recall')
+    plt.ylabel('Precision')
+    plt.ylim([0.0, 1.05])
+    plt.xlim([0.0, 1.0])
+
+    title = kwargs.get('title', None)
+    plot_path = kwargs.get('plot_path', None)
+
+    curve_auc = auc(recall, precision)
+
+    if title is None:
+        plt.title('AUC=%.2f' % curve_auc)
+    else:
+        plt.title('%s, AUC=%.2f' % (title, curve_auc))
+
+    if plot_path is None:
+        plt.show()
+    else:
+        plt.savefig(plot_path)
+
+    plt.close()
+
+    return curve_auc
