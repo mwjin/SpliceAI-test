@@ -55,8 +55,8 @@ class Gene:
         if self.tx_end < iso_gene.tx_end:
             self.tx_end = iso_gene.tx_end
 
-        self.junc_starts.union(iso_gene.junc_starts)
-        self.junc_ends.union(iso_gene.junc_ends)
+        self.junc_starts = self.junc_starts.union(iso_gene.junc_starts)
+        self.junc_ends = self.junc_ends.union(iso_gene.junc_ends)
         self.iso_cnt += 1
 
     def parse_dataset_entry(self, line_entry):
