@@ -12,7 +12,7 @@ import re
 # path settings
 gencode_path = '/extdata6/Minwoo/data/annotation/gencode_v19/gencode.v19.annotation.gff3'
 out_dir = DATA_DIR
-out_file_path = SPLICE_TABLE
+out_file_path = '%s/gencode_dataset.txt' % out_dir
 os.makedirs(out_dir, exist_ok=True)
 
 regex_chr = re.compile('^chr([0-9]{1,2}|[XY])$')
@@ -59,14 +59,13 @@ with open(gencode_path, 'r') as infile:
         elif entry_type == 'transcript':
             gene_name = info_table['gene_name']
             tx_name = info_table['transcript_name']
-            gene_table[chrom][strand][gene_name][tx_name] = [[], []]
+            gene_table[chrom][strand][gene_name][tx_name] = []
             tx_to_position[tx_name] = (chrom, strand, start, end)
 
         elif entry_type == 'exon':
             gene_name = info_table['gene_name']
             tx_name = info_table['transcript_name']
-            gene_table[chrom][strand][gene_name][tx_name][0].append(start)
-            gene_table[chrom][strand][gene_name][tx_name][1].append(end)
+            gene_table[chrom][strand][gene_name][tx_name].append((start, end))
 
 with open(out_file_path, 'w') as outfile:
     for chrom in gene_table:
@@ -76,17 +75,19 @@ with open(out_file_path, 'w') as outfile:
 
                 for tx_name in gene_table[chrom][strand][gene_name]:
                     _, _, tx_start, tx_end = tx_to_position[tx_name]
-                    exon_starts, exon_ends = gene_table[chrom][strand][gene_name][tx_name]
+                    exons = gene_table[chrom][strand][gene_name][tx_name]
+                    exons.sort()
+                    exon_cnt = len(exons)
 
-                    if len(exon_starts) == 1:
+                    if len(exons) == 1:
                         continue
 
                     junc_start_str = ''
                     junc_end_str = ''
 
-                    for i in range(1, len(exon_starts)):
-                        junc_start_str += '%s,' % exon_ends[i - 1]
-                        junc_end_str += '%s,' % exon_starts[i]
+                    for i in range(1, exon_cnt):
+                        junc_start_str += '%s,' % exons[i - 1][1]
+                        junc_end_str += '%s,' % exons[i][0]
 
                     print(gene_name, tx_num, chrom, strand, tx_start, tx_end, junc_start_str, junc_end_str,
                           sep='\t', end='\n', file=outfile)
