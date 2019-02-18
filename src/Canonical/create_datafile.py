@@ -13,10 +13,12 @@ import sys
 import time
 import h5py
 from constants import *
+from utils import chrom_list
 
 start_time = time.time()
+chroms = chrom_list()
 
-assert sys.argv[1] in ['train', 'test', 'all']
+assert sys.argv[1] in ['train', 'test', 'all'] + chroms
 assert sys.argv[2] in ['0', '1', 'all']
 
 if sys.argv[1] == 'train':
@@ -25,12 +27,15 @@ if sys.argv[1] == 'train':
                    'chr14', 'chr16', 'chr18', 'chr20', 'chr22', 'chrX', 'chrY']
 elif sys.argv[1] == 'test':
     CHROM_GROUP = ['chr1', 'chr3', 'chr5', 'chr7', 'chr9']
-else:
+elif sys.argv[1] == 'all':
     CHROM_GROUP = ['chr1', 'chr3', 'chr5', 'chr7', 'chr9',
                    'chr11', 'chr13', 'chr15', 'chr17', 'chr19', 'chr21',
                    'chr2', 'chr4', 'chr6', 'chr8', 'chr10', 'chr12',
                    'chr14', 'chr16', 'chr18', 'chr20', 'chr22', 'chrX', 'chrY']
+else:
+    CHROM_GROUP = [sys.argv[1]]
 
+outfile_path = sys.argv[3]
 ###############################################################################
 
 NAME = []      # Gene symbol
@@ -78,9 +83,7 @@ fpr2.close()
 
 ###############################################################################
 
-h5f = h5py.File(DATA_DIR + 'datafile'
-                + '_' + sys.argv[1] + '_' + sys.argv[2]
-                + '.h5', 'w')
+h5f = h5py.File(outfile_path, 'w')
 
 h5f.create_dataset('NAME', data=np.asarray(NAME))
 h5f.create_dataset('PARALOG', data=np.asarray(PARALOG))
