@@ -28,17 +28,21 @@ def main():
     dataset_path_format = '{0}/gencode_merge_dataset_%s.h5'.format(DATA_DIR)
     output_dir = RESULT_DIR
     os.makedirs(output_dir, exist_ok=True)
-    output_path_format = '{0}/SpliceAI_10K_gencode_merge_%s.txt'.format(output_dir)
+    test_result_format = '{0}/SpliceAI_10K_gencode_merge_%s.dat'.format(output_dir)
+    test_stats_format = '{0}/SpliceAI_10K_gencode_merge_%s.txt'.format(output_dir)
 
     jobs = []
     test_model_script = '%s/src/Canonical/test_model.py' % PROJECT_DIR
+    test_stats_script = '%s/src/Canonical/test_statistics.py' % PROJECT_DIR
 
     chroms = chrom_list()
 
     for chrom in chroms:
         dataset_path = dataset_path_format % chrom
-        output_path = output_path_format % chrom
-        cmd = '%s 10000 %s > %s' % (test_model_script, dataset_path, output_path)
+        test_result_path = test_result_format % chrom
+        test_stats_path = test_stats_format % chrom
+        cmd = '%s 10000 %s %s;' % (test_model_script, dataset_path, test_result_path)
+        cmd += '%s %s > %s;' % (test_stats_script, test_result_path, test_stats_path)
 
         if is_test:
             print(cmd)
