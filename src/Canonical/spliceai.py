@@ -65,7 +65,7 @@ def SpliceAI(L, W, AR):
 
 
 def categorical_crossentropy_2d(y_true, y_pred):
-    # Standard categorical cross entropy for sequence outputs
+    # Standard categorical cross entropy for SEQUENCE outputs
 
     return - kb.mean(y_true[:, :, 0]*kb.log(y_pred[:, :, 0]+1e-10)
                    + y_true[:, :, 1]*kb.log(y_pred[:, :, 1]+1e-10)

@@ -61,7 +61,7 @@ model_m.compile(loss=categorical_crossentropy_2d, optimizer='adam')
 # Training and validation
 ###############################################################################
 
-h5f = h5py.File(data_dir + 'dataset' + '_' + 'train'
+h5f = h5py.File(DATA_DIR + 'dataset' + '_' + 'train'
                 + '_' + 'all' + '.h5', 'r')
 
 num_idx = len(h5f.keys())//2

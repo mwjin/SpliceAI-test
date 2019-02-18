@@ -26,7 +26,7 @@ for v in range(len(version)):
     model[v] = load_model('Models/SpliceAI' + str(CL)
                           + '_c' + str(version[v]) + '.h5')
 
-h5f = h5py.File(data_dir + 'dataset' + '_' + 'test'
+h5f = h5py.File(DATA_DIR + 'dataset' + '_' + 'test'
                 + '_' + '0' + '.h5', 'r')
 
 num_idx = len(h5f.keys())//2

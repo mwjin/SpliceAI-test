@@ -8,11 +8,11 @@ SL=5000
 # SL will be the output length)
 
 # directory settings
-project_dir='/extdata4/baeklab/minwoo/project/SpliceAI-test'
-data_dir='/extdata4/baeklab/minwoo/project/SpliceAI-test/data'
-result_dir='/extdata4/baeklab/minwoo/project/SpliceAI-test/results'
+PROJECT_DIR= '/extdata4/baeklab/minwoo/project/SpliceAI-test'
+DATA_DIR= '/extdata4/baeklab/minwoo/project/SpliceAI-test/data'
+RESULT_DIR= '/extdata4/baeklab/minwoo/project/SpliceAI-test/results'
 
 # data path settings
-ref_genome='/extdata6/Minwoo/data/ref-genome/hg19/hg19.fa'
-splice_table='/extdata4/baeklab/minwoo/projects/SpliceAI-test/data/canonical_dataset.txt'
-sequence='/extdata4/baeklab/minwoo/projects/SpliceAI-test/data/canonical_sequence.txt'
+REF_GENOME= '/extdata6/Minwoo/data/ref-genome/hg19/hg19.fa'
+SPLICE_TABLE= '/extdata4/baeklab/minwoo/projects/SpliceAI-test/data/canonical_dataset.txt'
+SEQUENCE= '/extdata4/baeklab/minwoo/projects/SpliceAI-test/data/canonical_sequence.txt'

@@ -40,11 +40,11 @@ TX_START = []  # Position where transcription starts
 TX_END = []    # Position where transcription ends
 JN_START = []  # Positions where canonical exons end
 JN_END = []    # Positions where canonical exons start
-SEQ = []       # Nucleotide sequence
+SEQ = []       # Nucleotide SEQUENCE
 
-fpr2 = open(sequence, 'r')
+fpr2 = open(SEQUENCE, 'r')
 
-with open(splice_table, 'r') as fpr1:
+with open(SPLICE_TABLE, 'r') as fpr1:
     for line1 in fpr1:
 
         line2 = fpr2.readline()
@@ -77,7 +77,7 @@ fpr2.close()
 
 ###############################################################################
 
-h5f = h5py.File(data_dir + 'datafile' 
+h5f = h5py.File(DATA_DIR + 'datafile'
                 + '_' + sys.argv[1] + '_' + sys.argv[2]
                 + '.h5', 'w')
 

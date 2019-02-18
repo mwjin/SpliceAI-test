@@ -16,7 +16,7 @@ start_time = time.time()
 assert sys.argv[1] in ['train', 'test', 'all']
 assert sys.argv[2] in ['0', '1', 'all']
 
-h5f = h5py.File(data_dir + 'datafile'
+h5f = h5py.File(DATA_DIR + 'datafile'
                 + '_' + sys.argv[1] + '_' + sys.argv[2]
                 + '.h5', 'r')
 
@@ -28,9 +28,9 @@ JN_START = h5f['JN_START'][:]
 JN_END = h5f['JN_END'][:]
 h5f.close()
 
-h5f2 = h5py.File(data_dir + 'dataset'
-                + '_' + sys.argv[1] + '_' + sys.argv[2]
-                + '.h5', 'w')
+h5f2 = h5py.File(DATA_DIR + 'dataset'
+                 + '_' + sys.argv[1] + '_' + sys.argv[2]
+                 + '.h5', 'w')
 
 CHUNK_SIZE = 100
 

@@ -33,7 +33,7 @@ def ceil_div(x, y):
 
 
 def create_datapoints(seq, strand, tx_start, tx_end, jn_start, jn_end):
-    # This function first converts the sequence into an integer array, where
+    # This function first converts the SEQUENCE into an integer array, where
     # A, C, G, T, N are mapped to 1, 2, 3, 4, 0 respectively. If the strand is
     # negative, then reverse complementing is done. The splice junctions 
     # are also converted into an array of integers, where 0, 1, 2, -1 
@@ -95,8 +95,8 @@ def create_datapoints(seq, strand, tx_start, tx_end, jn_start, jn_end):
 def reformat_data(X0, Y0):
     # This function converts X0, Y0 of the create_datapoints function into
     # blocks such that the data is broken down into data points where the
-    # input is a sequence of length SL+CL_max corresponding to SL nucleotides
-    # of interest and CL_max context nucleotides, the output is a sequence of
+    # input is a SEQUENCE of length SL+CL_max corresponding to SL nucleotides
+    # of interest and CL_max context nucleotides, the output is a SEQUENCE of
     # length SL corresponding to the splicing information of the nucleotides
     # of interest. The CL_max context nucleotides are such that they are
     # CL_max/2 on either side of the SL nucleotides of interest.
