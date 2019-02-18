@@ -33,12 +33,13 @@ h5f.close()
 h5f2 = h5py.File(outfile_path, 'w')
 
 CHUNK_SIZE = 100
+CHUNK_NUM = SEQ.shape[0] // CHUNK_SIZE + 1
 
-for i in range(SEQ.shape[0]//CHUNK_SIZE):
+for i in range(CHUNK_NUM):
     # Each dataset has CHUNK_SIZE genes
     
-    if (i+1) == SEQ.shape[0]//CHUNK_SIZE:
-        NEW_CHUNK_SIZE = CHUNK_SIZE + SEQ.shape[0]%CHUNK_SIZE
+    if (i+1) == CHUNK_NUM:
+        NEW_CHUNK_SIZE = SEQ.shape[0] % CHUNK_SIZE
     else:
         NEW_CHUNK_SIZE = CHUNK_SIZE
 
