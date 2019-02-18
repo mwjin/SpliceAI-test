@@ -18,7 +18,7 @@ def main():
     """
     # job scheduler settings
     queue = 'optiplex.q'
-    is_test = True
+    is_test = False
 
     job_name_prefix = 'Minu.SpliceAI.Preprocess.Data'
     log_dir = '%s/log/%s/%s' % (PROJECT_DIR, job_name_prefix, time_stamp())
@@ -30,8 +30,8 @@ def main():
     chroms = chrom_list()
 
     for chrom in chroms:
-        datafile_path = '%s/datafile_gencode_merge_%s.h5' % (DATA_DIR, chrom)
-        dataset_path = '%s/dataset_gencode_merge_%s.h5' % (DATA_DIR, chrom)
+        datafile_path = '%s/gencode_merge_datafile_%s.h5' % (DATA_DIR, chrom)
+        dataset_path = '%s/gencode_merge_dataset_%s.h5' % (DATA_DIR, chrom)
 
         cmd = '%s %s %s %s;' % (datafile_script, chrom, 'all', datafile_path)
         cmd += '%s %s %s;' % (dataset_script, datafile_path, dataset_path)
