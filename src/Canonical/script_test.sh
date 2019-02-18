@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 #$ -q gpu
 #$ -cwd
 #$ -N test_spliceai

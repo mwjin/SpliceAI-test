@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python2.7
 """
 By parsing the splice table we made,
 merge transcript start/end sites and splice sites of multiple isoforms with same gene name

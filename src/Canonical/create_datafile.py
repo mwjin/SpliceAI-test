@@ -1,3 +1,4 @@
+#!/usr/bin/env python2.7
 ###############################################################################
 '''This parser takes as input the text files canonical_dataset.txt and 
 canonical_sequence.txt, and produces a .h5 file datafile_{}_{}.h5,

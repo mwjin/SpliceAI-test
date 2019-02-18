@@ -1,3 +1,4 @@
+#!/usr/bin/env python2.7
 ###############################################################################
 '''This parser takes as input the .h5 file produced by create_datafile.py and
 outputs a .h5 file with datapoints of the form (X, Y), which can be understood
