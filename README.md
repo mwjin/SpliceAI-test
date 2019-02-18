@@ -1,11 +1,21 @@
 # SpliceAI-test
+### Introduction
 This repository includes python/shell scripts to test [Illumina/SpliceAI](https://github.com/Illumina/SpliceAI) to check whether SpliceAI is really good at predicting splice sites.
 
 This project simply tries to run SpliceAI using all alternative isoforms from GENCODE v19.
 
-Original source codes: https://basespace.illumina.com/s/5u6ThOblecrh
 
-Additional source codes or source code modification will appear at the commit history. 
+### Instructions
+1. It requires,
+    
+    1. python2 interpreter satisfying the requirement specified in setup.py
+    2. python3 interpreter with installed [minwoooj/lab-modules](https://github.com/minwoooj/lab-modules).
+
+    So I recommend to use conda virtual environments.
+
+2. Original source codes: https://basespace.illumina.com/s/5u6ThOblecrh
+
+3. Additional source codes or source code modification will appear at the commit history. 
 
 The following description is original README.md of [Illumina/SpliceAI](https://github.com/Illumina/SpliceAI).
 
