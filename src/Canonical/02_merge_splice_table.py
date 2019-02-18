@@ -22,27 +22,27 @@ class Gene:
         self.tx_end = 0
 
         # for splice sites
-        self.exon_starts = set()
-        self.exon_ends = set()
+        self.junc_starts = set()
+        self.junc_ends = set()
 
     def __str__(self):
-        exon_starts = list(self.exon_starts)
-        exon_starts.sort()
-        exon_start_str = ''
+        junc_starts = list(self.junc_starts)
+        junc_starts.sort()
+        junc_start_str = ''
 
-        for exon_start in exon_starts:
-            exon_start_str += '%d,' % exon_start
+        for junc_start in junc_starts:
+            junc_start_str += '%d,' % junc_start
 
-        exon_ends = list(self.exon_ends)
-        exon_ends.sort()
-        exon_end_str = ''
+        junc_ends = list(self.junc_ends)
+        junc_ends.sort()
+        junc_end_str = ''
 
-        for exon_end in exon_ends:
-            exon_end_str += '%d,' % exon_end
+        for junc_end in junc_ends:
+            junc_end_str += '%d,' % junc_end
 
         return '%s\t%d\t%s\t%s\t%d\t%d\t%s\t%s' % \
                (self.name, self.iso_cnt, self.chrom, self.strand,
-                self.tx_start, self.tx_end, exon_start_str, exon_end_str)
+                self.tx_start, self.tx_end, junc_start_str, junc_end_str)
 
     def merge(self, iso_gene):
         assert self.name == iso_gene.name
@@ -55,8 +55,8 @@ class Gene:
         if self.tx_end < iso_gene.tx_end:
             self.tx_end = iso_gene.tx_end
 
-        self.exon_starts.union(iso_gene.exon_starts)
-        self.exon_ends.union(iso_gene.exon_ends)
+        self.junc_starts.union(iso_gene.junc_starts)
+        self.junc_ends.union(iso_gene.junc_ends)
         self.iso_cnt += 1
 
     def parse_dataset_entry(self, line_entry):
@@ -70,11 +70,11 @@ class Gene:
         self.tx_start = int(fields[4])
         self.tx_end = int(fields[5])
 
-        exon_starts = fields[6].strip(',').split(',')
-        exon_ends = fields[6].strip(',').split(',')
+        junc_starts = fields[6].strip(',').split(',')
+        junc_ends = fields[6].strip(',').split(',')
 
-        self.exon_starts.update(map(int, exon_starts))
-        self.exon_ends.update(map(int, exon_ends))
+        self.junc_starts.update(map(int, junc_starts))
+        self.junc_ends.update(map(int, junc_ends))
 
 
 gene_table = {}  # key: {gene_name}_{chrom}_{strand}, value: 'Gene' object
