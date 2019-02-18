@@ -1,8 +1,10 @@
+#!/extdata6/Doyeon/anaconda3/envs/minu-py2/bin/python2
 ###############################################################################
 # This file contains code to test the SpliceAI model.
 ###############################################################################
 
 import numpy as np
+import os
 import sys
 import time
 import h5py
@@ -23,11 +25,13 @@ version = [1, 2, 3, 4, 5]
 model = [[] for v in range(len(version))]
 
 for v in range(len(version)):
-    model[v] = load_model('Models/SpliceAI' + str(CL)
-                          + '_c' + str(version[v]) + '.h5')
+    model[v] = load_model('%s/spliceai%s.h5' % (MODEL_DIR, str(version[v])))
 
-h5f = h5py.File(DATA_DIR + 'dataset' + '_' + 'test'
-                + '_' + '0' + '.h5', 'r')
+dataset_path = sys.argv[2]
+h5f = h5py.File(dataset_path, 'r')
+
+dataset_basename = os.path.basename(dataset_path)
+pr_curve_prefix = dataset_basename.replace('.h5', '')
 
 num_idx = len(h5f.keys())//2
 
